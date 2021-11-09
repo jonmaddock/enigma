@@ -6,8 +6,7 @@ beat) a dah is three. Each dit or dah is followed by a space of one dit. Each
 character is followed by a space of three dits, and words are separated by a 
 space of seven dits.
 """
-import numpy as np
-import simpleaudio as sa
+from enigma.keyer import Keyer
 
 MORSE_CODE = {
     "A": ".-",
@@ -87,7 +86,9 @@ class Morse:
         self.text = ""
         print(f"Morse: {self.morse}")
 
-        self.play()
+        # Play Morse code sound
+        keyer = Keyer(self.morse)
+        keyer.play()
 
         # Break up Morse words
         morse_words = self.morse.split(MORSE_WORD_SPACE)
@@ -122,27 +123,3 @@ class Morse:
                     # Found matching Morse; add corresponding text letter
                     self.text += key
                     break
-
-    def play(self):
-        """Play a continuous Morse tone."""
-        frequency = 440  # 440 Hz
-        sample_rate = 44100
-        duration = 3
-
-        # Create array for points in time
-        t = np.linspace(0, duration, num=sample_rate * duration, endpoint=False)
-
-        # Create a sine wave at 440 Hz
-        note = np.sin(2 * np.pi * frequency * t)
-
-        # Ensure that note is in 16-bit range, normalised to maximum amplitude
-        audio = (2 ** 15 - 1) * note / (np.max(np.abs(note)))
-
-        # Convert to 16-bit data
-        audio = audio.astype(np.int16)
-
-        # Start playback
-        play_obj = sa.play_buffer(audio, 1, 2, sample_rate)
-
-        # Wait for playback to finish before exiting
-        play_obj.wait_done()
