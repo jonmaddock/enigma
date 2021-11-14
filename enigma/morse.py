@@ -6,6 +6,8 @@ beat) a dah is three. Each dit or dah is followed by a space of one dit. Each
 character is followed by a space of three dits, and words are separated by a 
 space of seven dits.
 """
+from enigma.keyer import Keyer
+
 MORSE_CODE = {
     "A": ".-",
     "B": "-...",
@@ -83,6 +85,10 @@ class Morse:
         self.morse = morse
         self.text = ""
         print(f"Morse: {self.morse}")
+
+        # Play Morse code sound
+        keyer = Keyer(self.morse)
+        keyer.play()
 
         # Break up Morse words
         morse_words = self.morse.split(MORSE_WORD_SPACE)
