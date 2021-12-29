@@ -1,9 +1,9 @@
 """A Morse code encoder and decoder.
 
-Morse code consists of "dits", "dahs" and spaces. A dit or dah is a signal, 
+Morse code consists of "dits", "dahs" and spaces. A dit or dah is a signal,
 whereas a space is an absensce of signal. A dit is one unit of Morse time (or
-beat) a dah is three. Each dit or dah is followed by a space of one dit. Each 
-character is followed by a space of three dits, and words are separated by a 
+beat) a dah is three. Each dit or dah is followed by a space of one dit. Each
+character is followed by a space of three dits, and words are separated by a
 space of seven dits.
 """
 from enigma.keyer import Keyer

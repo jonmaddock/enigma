@@ -72,7 +72,9 @@ class Keyer:
 
         # Create increasing time value array of equivalent length
         duration = signal_stretched.size / SAMPLE_RATE
-        t = np.linspace(0.0, duration, num=signal_stretched.size, endpoint=False)
+        t = np.linspace(
+            0.0, duration, num=signal_stretched.size, edpoint=False
+        )
 
         # Create a sine wave at 440 Hz
         sine = np.sin(2 * np.pi * FREQUENCY * t)
