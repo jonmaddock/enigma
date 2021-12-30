@@ -14,9 +14,10 @@ jobs:
         with:
           # Semantic version range syntax: latest minor version of Python 3
           python-version: "3.x"
-      - name: Install package and dependencies
-        # Install simpleaudio dependencies
+      - name: Install apt package dependencies
+        # simpleaudio dependencies
         run: sudo apt-get install -y libasound2-dev
+      - name: Install package and dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e .
