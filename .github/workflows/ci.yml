@@ -14,9 +14,10 @@ jobs:
         with:
           # Semantic version range syntax: latest minor version of Python 3
           python-version: "3.x"
-      - name: Install dependencies
+      - name: Install package and dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install -e .
           pip install -r requirements.txt
       - name: Lint with flake8
         run: flake8 enigma
