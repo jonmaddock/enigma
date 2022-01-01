@@ -90,9 +90,16 @@ class Keyer:
         return audio
 
     def play(self):
-        """Play Morse code."""
-        # Start playback
-        play_obj = sa.play_buffer(self.audio, 1, 2, SAMPLE_RATE)
+        """Play Morse code.
 
-        # Wait for playback to finish before exiting
-        play_obj.wait_done()
+        In the case of audio errors (i.e. on CI system with no sound card),
+        catch exception and notify.
+        """
+        try:
+            # Start playback
+            play_obj = sa.play_buffer(self.audio, 1, 2, SAMPLE_RATE)
+
+            # Wait for playback to finish before exiting
+            play_obj.wait_done()
+        except sa._simpleaudio.SimpleaudioError:
+            print("There was an error with audio playback.")
