@@ -5,5 +5,5 @@ setup(
     version="0.0.1",
     description="An attempt to explore the Enigma ciphering system.",
     packages=["enigma"],
-    install_requires=["numpy", "simpleaudio"],
+    install_requires=["numpy", "simpleaudio", "pynput"],
 )
