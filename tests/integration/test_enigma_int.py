@@ -7,13 +7,13 @@ def test_rotor():
 
     Checks its output changes as expected as it rotates.
     """
-    rotor = en.Rotor("DMTWSILRUYQNKFEJCAZBPGXOHV")
+    rotor = en.Rotor("DMTWSILRUYQNKFEJCAZBPGXOHV", "Q")
     # Trace 2 input pins through rotor to output pins
     assert rotor.trace(0) == 3  # A traces to D
     assert rotor.trace(21) == 6  # V traces to G
 
     # Advance rotor relative to machine (to position 1) and repeat
-    rotor.advance()
+    rotor.step()
     # Now A traces to M (pin 12) on rotor, N (pin 13) relative to machine
     assert rotor.trace(0) == 13
     # Now V traces to X (pin 23) on rotor, Y (pin 24) relative to machine

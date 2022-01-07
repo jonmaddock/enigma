@@ -10,9 +10,14 @@ class Enigma:
     """An Enigma machine."""
 
     def __init__(self):
-        """Initialise the machine components."""
-        # TODO Implement additional rotors
-        self.rotor1 = Rotor("DMTWSILRUYQNKFEJCAZBPGXOHV")
+        """Initialise the machine components.
+
+        Rotor wiring taken from https://en.wikipedia.org/wiki/Enigma_rotor_deta
+        ils#Turnover_notch_positions
+        """
+        self.rotor1 = Rotor("DMTWSILRUYQNKFEJCAZBPGXOHV", "Q")
+        self.rotor2 = Rotor("HQZGPJTMOBLNCIFDYAWVEUSRKX", "E")
+        self.rotor3 = Rotor("UQNTLSZFMREHDPXKIBVYGJCWOA", "V")
 
     def press_key(self, letter_input):
         """Press a key on the machine.
@@ -22,36 +27,58 @@ class Enigma:
         :return: the letter bulb that lights up
         :rtype: str
         """
-        # Encode with one rotor to start with
-        # Advance rotors with each key press
-        self.rotor1.advance()
+        # Step rotors forward with each key press
+        self.step_rotors()
 
         # Initial pin index for pressed key; output pin of machine to be input
         # to first rotor (r1)
         # Pin number is relative to position zero of the rotor
         r1_input_pos0 = ALPHABET.find(letter_input)
-        # Trace pin through the first rotor
-        r1_output_pos0 = self.rotor1.trace(r1_input_pos0)
 
-        # Traced through all rotors: convert final output pin to letter
-        letter_output = ALPHABET[r1_output_pos0]
+        # Trace pin through the three rotors
+        r1_output_pos0 = self.rotor1.trace(r1_input_pos0)
+        r2_output_pos0 = self.rotor2.trace(r1_output_pos0)
+        r3_output_pos0 = self.rotor3.trace(r2_output_pos0)
+
+        # Traced through all rotors: convert final output pin back to letter
+        letter_output = ALPHABET[r3_output_pos0]
         return letter_output
+
+    def step_rotors(self):
+        """Step rotors forward.
+
+        Step first rotor, turning over rotors 2 and 3 if required.
+        """
+        if self.rotor1.position == self.rotor1.turnover_notch:
+            if self.rotor2.position == self.rotor2.turnover_notch:
+                # Turnover rotors 2 and 3
+                self.rotor3.step()
+
+            # Turnover rotor 2
+            self.rotor2.step()
+
+        # Step rotor 1
+        self.rotor1.step()
 
 
 class Rotor:
     """A single rotor for scrambling an input pin to a different output."""
 
-    def __init__(self, wiring):
+    def __init__(self, wiring, turnover_notch_letter):
         """Wire up each rotor's input/output pins.
 
         :param wiring: 26 letters representing the wiring order
         :type wiring: str
+        :param turnover_notch_letter: letter at which the rotor to the left is
+        stepped
+        :type turnover_notch_letter: str
         """
         # 26 possible positions of rotor
         self.positions = cycle(range(ROTOR_LEN))
         self.wire_up(wiring)
+        self.turnover_notch = ALPHABET.find(turnover_notch_letter)
         # Set rotor starting position to 0
-        self.advance()
+        self.step()
 
     def wire_up(self, output_letter_order):
         """Wire up the rotor.
@@ -72,8 +99,8 @@ class Rotor:
 
         self.wiring = dict(zip(range(ROTOR_LEN), output_pin_order))
 
-    def advance(self):
-        """Advance the rotor."""
+    def step(self):
+        """Advance the rotor by one."""
         self.position = next(self.positions)
 
     def trace(self, input_pin_pos0):
