@@ -10,6 +10,7 @@ Welcome to enigma's documentation!
    :caption: Contents:
 
    enigma_machine
+   api
 
 Indices and tables
 ==================
