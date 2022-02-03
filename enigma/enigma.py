@@ -107,7 +107,7 @@ class Rotor:
         """Trace an input pin through the rotor to an output pin.
 
         :param input_pin_pos0: input pin from the previous component (machine
-        or previous rotor) relative to position 0 of the rotor
+            or previous rotor) relative to position 0 of the rotor
         :type input_pin_pos0: int
         :return: output pin relative to position 0 of rotor
         :rtype: int
