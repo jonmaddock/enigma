@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/jonmaddockenigma/badge/?version=latest)](https://jonmaddockenigma.readthedocs.io/en/latest/?badge=latest)
+
 # enigma
 
 An attempt to explore the Enigma ciphering system.
