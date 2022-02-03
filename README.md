@@ -2,7 +2,7 @@
 
 An attempt to explore the Enigma ciphering system.
 
-This package currently implements a basic Enigma machine and performs basic encryption of input letters.
+This package currently implements a basic Enigma machine and performs basic encryption of input letters. More detailed documentation can be found [here](https://jonmaddockenigma.readthedocs.io).
 
 ## Installation
 
